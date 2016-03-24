@@ -147,6 +147,7 @@ struct BriskLongPair{
 		static const float basicSize_;
 	};
 
+#ifdef HAVE_SSSE3
 	/// Faster Hamming distance functor - uses sse
 	/// bit count of A exclusive XOR'ed with B
 	class CV_EXPORTS HammingSse
@@ -173,6 +174,7 @@ struct BriskLongPair{
 				size/16);
 	    }
 	};
+#endif // HAVE_SSSE3
 
 	// a layer in the Brisk detector pyramid
 	class CV_EXPORTS BriskLayer

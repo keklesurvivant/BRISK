@@ -44,7 +44,9 @@
 #include <agast/agast7_12s.h>
 #include <agast/agast5_8.h>
 #include <stdlib.h>
+#ifdef HAVE_SSSE3
 #include <tmmintrin.h>
+#endif // HAVE_SSSE3
 
 
 using namespace cv;
@@ -1971,6 +1973,7 @@ inline void BriskLayer::halfsample(const cv::Mat& srcimg, cv::Mat& dstimg){
 }
 
 inline void BriskLayer::twothirdsample(const cv::Mat& srcimg, cv::Mat& dstimg){
+#if (defined HAVE_MMX && defined HAVE_SSSE3)
 	const unsigned short leftoverCols = ((srcimg.cols/3)*3)%15;// take care with border...
 
 	// make sure the destination image is of the right size:
@@ -2061,4 +2064,7 @@ inline void BriskLayer::twothirdsample(const cv::Mat& srcimg, cv::Mat& dstimg){
 		p_dest1 = dstimg.data+row_dest*dstimg.cols;
 		p_dest2 = p_dest1+dstimg.cols;
 	}
+#else
+	cv::resize(srcimg, dstimg, dstimg.size());
+#endif // HAVE_MMX
 }
