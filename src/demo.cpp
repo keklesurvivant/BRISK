@@ -34,7 +34,6 @@
 */
 
 #include <opencv2/opencv.hpp>
-#include <opencv2/nonfree/features2d.hpp>
 #include <opencv2/legacy/legacy.hpp>
 #include "../include/brisk/brisk.h"
 #include <fstream>
@@ -58,8 +57,8 @@ void help(char** argv){
 			<< "    " << "2nd:        Number of the 2nd image (the 1st one is always img1.ppm)"<< std::endl
 			<< "    " << "            or the rotation in degrees, if rot- used." << std::endl
 			<< "    " << "detector:   Feature detector, e.g. AGAST, or BRISK. You can add the "<< std::endl
-			<< "    " << "            threshold, e.g. BRISK80 or SURF2000"<< std::endl
-			<< "    " << "descriptor: Feature descriptor, e.g. SURF, BRIEF, BRISK or U-BRISK."<< std::endl
+			<< "    " << "            threshold, e.g. BRISK80"<< std::endl
+			<< "    " << "descriptor: Feature descriptor, e.g. BRIEF, BRISK or U-BRISK."<< std::endl
 			<< "    " << "[descFile]: Optional: files with descriptors to act as detected points."<< std::endl;
 }
 
@@ -195,19 +194,6 @@ int main(int argc, char ** argv) {
 				threshold = 30;
 			detector = new cv::BriskFeatureDetector(threshold,4);
 		}
-		else if(strncmp("SURF", argv[3], 4 )==0){
-			threshold = atoi(argv[3]+4);
-			if(threshold==0)
-				threshold = 400;
-			detector = new cv::SurfFeatureDetector(threshold);
-		}
-		else if(strncmp("SIFT", argv[3], 4 )==0){
-			float thresh = 0.04 / 4 / 2.0;
-			float edgeThreshold=atof(argv[3]+4);
-			if(edgeThreshold==0)
-				thresh = 10.0;
-			detector = new cv::SiftFeatureDetector(thresh,edgeThreshold);
-		}
 		else{
 			detector = cv::FeatureDetector::create( argv[3] );
 		}
@@ -298,14 +284,6 @@ int main(int argc, char ** argv) {
 		}
 		else if(std::string(argv[4])=="CALONDER"){
 			descriptorExtractor = new cv::CalonderDescriptorExtractor<float>("current.rtc");
-			hamming=false;
-		}
-		else if(std::string(argv[4])=="SURF"){
-			descriptorExtractor = new cv::SurfDescriptorExtractor();
-			hamming=false;
-		}
-		else if(std::string(argv[4])=="SIFT"){
-			descriptorExtractor = new cv::SiftDescriptorExtractor();
 			hamming=false;
 		}
 		else{

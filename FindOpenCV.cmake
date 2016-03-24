@@ -81,9 +81,6 @@ FIND_PATH(OpenCV2_VIDEO_INCLUDE_DIR
 FIND_PATH(OpenCV2_GPU_INCLUDE_DIR
           NAMES gpu.hpp
           PATHS "${OpenCV2_ROOT_DIR}/include/opencv2/gpu")
-FIND_PATH(OpenCV2_NONFREE_INCLUDE_DIR
-          NAMES features2d.hpp nonfree.hpp
-          PATHS "${OpenCV2_ROOT_DIR}/include/opencv2/nonfree")
 
 
 # absolute path to all libraries 
@@ -150,7 +147,6 @@ ELSE(WIN32)
     FIND_LIBRARY(OpenCV2_ML_LIBRARY         NAMES opencv_ml         PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
     FIND_LIBRARY(OpenCV2_VIDEO_LIBRARY      NAMES opencv_video      PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
     FIND_LIBRARY(OpenCV2_GPU_LIBRARY        NAMES opencv_gpu        PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
-    FIND_LIBRARY(OpenCV2_NONFREE_LIBRARY    NAMES opencv_nonfree    PATHS ${OPENCV2_LIBRARY_SEARCH_PATHS})
 ENDIF(WIN32)
 
 SET(OpenCV2_INCLUDE_DIRS
@@ -168,7 +164,6 @@ SET(OpenCV2_INCLUDE_DIRS
     ${OpenCV2_ML_INCLUDE_DIR}
     ${OpenCV2_VIDEO_INCLUDE_DIR}
     ${OpenCV2_GPU_INCLUDE_DIR}
-    ${OpenCV2_NONFREE_INCLUDE_DIR}
     )
 
 SET(OpenCV2_LIBRARIES
@@ -184,7 +179,6 @@ SET(OpenCV2_LIBRARIES
     ${OpenCV2_ML_LIBRARY}
     ${OpenCV2_VIDEO_LIBRARY}
     ${OpenCV2_GPU_LIBRARY}
-    ${OpenCV2_NONFREE_LIBRARY}
     )
 IF(WIN32)
     SET(OpenCV2_INCLUDE_DIRS
@@ -236,7 +230,6 @@ MARK_AS_ADVANCED(FORCE
                  OpenCV2_ML_LIBRARY
                  OpenCV2_VIDEO_LIBRARY
                  OpenCV2_GPU_LIBRARY
-                 OpenCV2_NONFREE_LIBRARY
                  )
 IF(WIN32)
     MARK_AS_ADVANCED(FORCE
